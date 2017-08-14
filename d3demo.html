@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<script src="../D3JS/d3.v4.js"></script>
+
+<script type="text/javascript">
+  d3.csv("airports.csv",function(error,data){
+    data.forEach(function(d){
+      d.AirportID = +d.AirportID
+      d.Latitude = +d.Latitude
+      d.Longitude = +d.Longitude
+      d.Altitude = +d.Altitude
+      d.Timezone = +d.Timezone
+    })
+    console.log(data[0])
+
+
+    // function filter_country(d){
+    //   return d.Country === "India"
+    // }
+
+    <!-- FILTER DATA -->
+    var data_small = data.filter(function(d){
+        return d.Country === "India"
+    })
+
+    <!-- SORT DATA -->
+    var data_sorted = data_small.sort(function(a,b){
+      return b.Altitude  - a.Altitude
+    })
+    var data_sorted2 = data_small.sort(function(d){
+      return d3.descending(d.Altitude)
+    })
+
+    <!-- CHAINING CONCEPT -->
+    var data_chained = data.filter(function(d){return d.Country === "India"})
+                          .sort(function(a,b){return d3.descending(b.Altitude  - a.Altitude)})
+                          .filter(function(d){return d.Altitude > 2500});
+
+    var data_reducedColumn = data.filter(function(d){return d.Country === "India"})
+                                .sort(function(a,b){return d3.descending(b.Altitude  - a.Altitude)})
+                                .filter(function(d){return d.Altitude > 2500})
+                                .map(function(d){
+                                  return{
+                                    city: d.City,
+                                    altitude: d.Altitude,
+                                  }
+                                })
+
+    <!-- MINIMUM-->
+    var minAlt = d3.min(data_small, function(d){return d.Altitude})
+
+
+    var data_s = data.filter(
+                      function(d){
+                         return (
+                             d.Altitude === d3.min(data_small, function(d){return d.Altitude})
+                         )
+                       })
+
+
+
+    <!-- GROUP BY  :::: NESTING -->
+    var nestedData = d3.nest().key(function(d){return d.Country}).entries(data)
+
+    airportByCountry = d3.nest().key(function(d){return d.Country}).rollup(function(v){return v.length}).entries(data)
+
+    console.log(airportByCountry);
+  })
+
+
+</script>
+
+</html>

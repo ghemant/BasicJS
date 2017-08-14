@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<!-- <script src="https://d3js.org/d3.v4.js" ></script> -->
+<script src="../D3JS/d3.v4.js" ></script>
+<head>
+</head>
+
+<body>
+  <div id="demo">
+
+  </div>
+
+  <div>
+
+
+  </div>
+</body>
+
+<script>
+  var x = 2;
+  var array=[23,34,42,52,61]
+  var obj = [{"name":"hemant"},{"value":"25"}]
+  console.log(x);
+  console.log(array);
+  console.log(obj);
+  var p = document.getElementById("demo")
+  p.innerHTML = JSON.stringify(obj)
+
+  var f = function(x){
+    var y = 4
+    return x*x
+  }
+
+  console.log(f(7))
+  // function demoRun(){
+  //   document.getElementById("demo").innerHTML = array;
+  // }
+  // demoRun()
+</script>
+</html>
